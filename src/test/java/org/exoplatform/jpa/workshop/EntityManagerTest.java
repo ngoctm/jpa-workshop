@@ -7,7 +7,7 @@ import org.junit.Test;
 /**
  * Created by ngoctm on 11/11/15.
  */
-public class EntityManagerTest {
+public class EntityManagerTest extends JPATest {
 
   @Test
   public void testEntityManager()  {

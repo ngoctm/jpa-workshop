@@ -18,6 +18,8 @@ public class SuperHero {
 
   private String civilName;
 
+  private byte[] picture;
+
   public long getId() {
     return id;
   }
@@ -40,5 +42,13 @@ public class SuperHero {
 
   public void setCivilName(String civilName) {
     this.civilName = civilName;
+  }
+
+  public byte[] getPicture() {
+    return picture;
+  }
+
+  public void setPicture(byte[] picture) {
+    this.picture = picture;
   }
 }

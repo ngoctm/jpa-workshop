@@ -6,17 +6,15 @@ import java.util.Arrays;
 import java.util.Collection;
 import javax.persistence.Query;
 
-import org.exoplatform.jpa.workshop.entities.SuperHero;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
+import org.exoplatform.jpa.workshop.entities.SuperHero;
 
 import java.util.Collection;
 
 /**
  * Created by ngoctm on 11/11/15.
  */
-public class BasicEntityTest {
+public class BasicEntityTest extends JPATest {
 
   @Test
   public void testMyFirstEntity() {
