@@ -8,6 +8,9 @@ import java.util.List;
  */
 @Entity
 @Table(name = "SUPERHERO")
+@NamedQueries({
+        @NamedQuery(name = "superhero.findByPower", query = "SELECT s FROM SuperHero s JOIN s.powers p WHERE p.name = :power")
+})
 public class SuperHero extends ComicsCharacter {
 
   @Id
