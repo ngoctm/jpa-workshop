@@ -2,9 +2,7 @@ package org.exoplatform.jpa.workshop;
 
 import static org.junit.Assert.*;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import java.util.Collection;
 import javax.persistence.Query;
 
 import org.exoplatform.jpa.workshop.entities.SuperHero;
@@ -18,24 +16,6 @@ import java.util.Collection;
  * Created by ngoctm on 11/11/15.
  */
 public class BasicEntityTest {
-  private EntityManagerFactory entityManagerFactory;
-  private EntityManager entityManager;
-
-  @Before
-  public void setupTest() {
-    entityManagerFactory = Persistence.createEntityManagerFactory("my-pu");
-    entityManager = entityManagerFactory.createEntityManager();
-  }
-
-  @After
-  public void teardown() {
-    if(entityManager != null) {
-      entityManager.close();
-    }
-    if(entityManagerFactory != null) {
-      entityManagerFactory.close();
-    }
-  }
 
   @Test
   public void testMyFirstEntity() {
