@@ -7,6 +7,7 @@
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
         <class>org.exoplatform.jpa.workshop.entities.SuperHero</class>
         <class>org.exoplatform.jpa.workshop.entities.Ennemy</class>
+        <class>org.exoplatform.jpa.workshop.entities.Power</class>
         <properties>
             <property name="javax.persistence.provider" value="org.hibernate.ejb.HibernatePersistence"/>
             <property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbcDriver"/>

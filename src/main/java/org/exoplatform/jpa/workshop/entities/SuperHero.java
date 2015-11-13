@@ -28,6 +28,13 @@ public class SuperHero {
   @JoinColumn(name = "SUPERHERO_ID")
   private List<Ennemy> ennemies;
 
+  @ManyToMany(cascade = CascadeType.PERSIST)
+  @JoinTable(name = "SUPERHERO_POWER",
+          joinColumns = {@JoinColumn(name = "SUPERHERO_ID")},
+          inverseJoinColumns = {@JoinColumn(name = "POWER_ID")}
+  )
+  private List<Power> powers;
+
   public long getId() {
     return id;
   }
@@ -66,5 +73,13 @@ public class SuperHero {
 
   public void setEnnemies(List<Ennemy> ennemies) {
     this.ennemies = ennemies;
+  }
+
+  public List<Power> getPowers() {
+    return powers;
+  }
+
+  public void setPowers(List<Power> powers) {
+    this.powers = powers;
   }
 }
