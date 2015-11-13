@@ -133,4 +133,39 @@ public class BasicEntityTest extends JPATest {
     assertNotNull(powers);
     assertEquals(2, powers.size());
   }
+
+  @Test
+  public void testNamedQueries() {
+    // Given
+    Power spiderweb = new Power();
+    spiderweb.setName("Spider Web");
+    spiderweb.setDescription("Shoot spider webs from his wrists");
+
+    Power agility = new Power();
+    agility.setName("Agility");
+    agility.setDescription("Very agile !");
+
+    SuperHero spiderman = new SuperHero();
+    spiderman.setName("Spiderman");
+    spiderman.setCivilName("Peter Parker");
+    spiderman.setPicture("spiderman-picture".getBytes());
+    List<Power> spidermanPowers = new ArrayList<Power>();
+    spidermanPowers.add(spiderweb);
+    spidermanPowers.add(agility);
+    spiderman.setPowers(spidermanPowers);
+
+    entityManager.getTransaction().begin();
+    entityManager.persist(spiderman);
+    entityManager.getTransaction().commit();
+
+    // When
+    List<SuperHero> superHerosWithFlightPower = entityManager.createNamedQuery("superhero.findByPower").setParameter("power", "Flight").getResultList();
+    List<SuperHero> superHerosWithAglilityPower = entityManager.createNamedQuery("superhero.findByPower").setParameter("power", "Agility").getResultList();
+
+    // Then
+    assertNotNull(superHerosWithFlightPower);
+    assertEquals(0, superHerosWithFlightPower.size());
+    assertNotNull(superHerosWithAglilityPower);
+    assertEquals(1, superHerosWithAglilityPower.size());
+  }
 }
