@@ -11,6 +11,7 @@ import javax.persistence.Query;
 import org.junit.Test;
 import org.exoplatform.jpa.workshop.entities.SuperHero;
 import org.exoplatform.jpa.workshop.entities.Ennemy;
+import org.exoplatform.jpa.workshop.entities.Power;
 
 import java.util.Collection;
 
@@ -89,5 +90,42 @@ public class BasicEntityTest extends JPATest {
     List<Ennemy> ennemies = fetchedSpiderman.getEnnemies();
     assertNotNull(ennemies);
     assertEquals(2, ennemies.size());
+  }
+
+  @Test
+  public void testPowers() {
+    // Given
+    Power spiderweb = new Power();
+    spiderweb.setName("Spider Web");
+    spiderweb.setDescription("Shoot spider webs from his wrists");
+
+    Power agility = new Power();
+    agility.setName("Agility");
+    agility.setDescription("Very agile !");
+
+    SuperHero spiderman = new SuperHero();
+    spiderman.setName("Spiderman");
+    spiderman.setCivilName("Peter Parker");
+    spiderman.setPicture("spiderman-picture".getBytes());
+    List<Power> spidermanPowers = new ArrayList<Power>();
+    spidermanPowers.add(spiderweb);
+    spidermanPowers.add(agility);
+    spiderman.setPowers(spidermanPowers);
+
+    entityManager.getTransaction().begin();
+    entityManager.persist(spiderman);
+    entityManager.getTransaction().commit();
+
+    // When
+    SuperHero fetchedSpiderman = entityManager.find(SuperHero.class, spiderman.getId());
+
+    // Then
+    assertNotNull(fetchedSpiderman);
+    assertEquals("Spiderman", fetchedSpiderman.getName());
+    assertEquals("Peter Parker", fetchedSpiderman.getCivilName());
+    assertTrue(Arrays.equals("spiderman-picture".getBytes(), fetchedSpiderman.getPicture()));
+    List<Power> powers = fetchedSpiderman.getPowers();
+    assertNotNull(powers);
+    assertEquals(2, powers.size());
   }
 }
