@@ -33,11 +33,26 @@ public class JPATest {
   @Before
   public void setup() {
     // Init Liquibase
-    Class.forName("org.hsqldb.jdbcDriver");
-    conn = DriverManager.getConnection("jdbc:hsqldb:mem:db1", "sa", "");
-    Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(conn));
-    liquibase = new Liquibase("db/changelogs/superhero.db.changelog-1.0.0.xml", new ClassLoaderResourceAccessor(), database);
-    liquibase.update((String) null);
+    try {
+      Class.forName("org.hsqldb.jdbcDriver");
+    } catch (ClassNotFoundException e) {
+      System.out.println("Failed to get class org.hsqldb.jdbcDriver: " + e);
+    }
+    try {
+      conn = DriverManager.getConnection("jdbc:hsqldb:mem:db1", "sa", "");
+    }
+    catch (Exception e) {
+      System.out.println("Exception when get connection from Driver manager: " + e);
+    }
+
+    try {
+      Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(conn));
+      liquibase = new Liquibase("db/changelogs/superhero.db.changelog-1.0.0.xml", new ClassLoaderResourceAccessor(), database);
+      liquibase.update((String) null);
+    }
+    catch (Exception e) {
+      System.out.println("Cannot create new database: " + e);
+    }
 
     // init container
     try {
