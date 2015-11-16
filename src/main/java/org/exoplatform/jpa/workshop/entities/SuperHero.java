@@ -1,5 +1,7 @@
 package org.exoplatform.jpa.workshop.entities;
 
+import org.exoplatform.commons.api.persistence.ExoEntity;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -7,6 +9,7 @@ import java.util.List;
  *
  */
 @Entity
+@ExoEntity
 @Table(name = "SUPERHERO")
 @NamedQueries({
         @NamedQuery(name = "superhero.findByPower", query = "SELECT s FROM SuperHero s JOIN s.powers p WHERE p.name = :power")

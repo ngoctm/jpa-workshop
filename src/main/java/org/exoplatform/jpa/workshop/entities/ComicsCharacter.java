@@ -1,5 +1,7 @@
 package org.exoplatform.jpa.workshop.entities;
 
+import org.exoplatform.commons.api.persistence.ExoEntity;
+
 import javax.persistence.Column;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -9,6 +11,7 @@ import javax.persistence.MappedSuperclass;
  *
  */
 @MappedSuperclass
+@ExoEntity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class ComicsCharacter {
 

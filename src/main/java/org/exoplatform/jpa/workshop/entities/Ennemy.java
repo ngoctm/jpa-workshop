@@ -1,11 +1,14 @@
 package org.exoplatform.jpa.workshop.entities;
 
+import org.exoplatform.commons.api.persistence.ExoEntity;
+
 import javax.persistence.*;
 
 /**
  *
  */
 @Entity
+@ExoEntity
 @Table(name = "ENNEMY")
 public class Ennemy extends ComicsCharacter {
 

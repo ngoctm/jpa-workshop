@@ -17,11 +17,17 @@ import java.net.MalformedURLException;
 public class JPATest {
   protected EntityManagerService entityManagerService;
   protected EntityManager entityManager;
+  private StandaloneContainer container;
 
   @Before
   public void setup() {
     // init container
-    container = StandaloneContainer.getInstance();
+    try {
+      container = StandaloneContainer.getInstance();
+    }
+    catch (Exception e) {
+      System.out.println("Exeption: " + e);
+    }
 
     // create entity manager
     entityManagerService = container.getComponentInstanceOfType(EntityManagerService.class);
