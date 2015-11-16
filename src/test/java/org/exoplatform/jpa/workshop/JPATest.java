@@ -34,12 +34,18 @@ public class JPATest {
   public void setup() {
     // Init Liquibase
     try {
-      Class.forName("org.hsqldb.jdbcDriver");
+      // HSQL
+//      Class.forName("org.hsqldb.jdbcDriver");
+      // MySQL
+      Class.forName("com.mysql.jdbc.Driver");
     } catch (ClassNotFoundException e) {
-      System.out.println("Failed to get class org.hsqldb.jdbcDriver: " + e);
+      System.out.println("Failed to get class from database driver: " + e);
     }
     try {
-      conn = DriverManager.getConnection("jdbc:hsqldb:mem:db1", "sa", "");
+      // HSQL
+//      conn = DriverManager.getConnection("jdbc:hsqldb:mem:db1", "sa", "");
+      // MySQL
+      conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/db1", "root", "exo");
     }
     catch (Exception e) {
       System.out.println("Exception when get connection from Driver manager: " + e);
