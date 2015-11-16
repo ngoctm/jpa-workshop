@@ -1,35 +1,40 @@
 package org.exoplatform.jpa.workshop;
 
-import static org.junit.Assert.assertNotNull;
-
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+
+import org.exoplatform.commons.persistence.impl.EntityManagerService;
+import org.exoplatform.container.StandaloneContainer;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Test;
+
+import org.exoplatform.container.ExoContainerContext;
+import java.net.MalformedURLException;
 
 /**
  * Created by ngoctm on 11/13/15.
  */
 public class JPATest {
-  protected EntityManagerFactory entityManagerFactory;
+  protected EntityManagerService entityManagerService;
   protected EntityManager entityManager;
 
   @Before
   public void setup() {
-    entityManagerFactory = Persistence.createEntityManagerFactory("my-pu");
-    entityManager = entityManagerFactory.createEntityManager();
+    // init container
+    container = StandaloneContainer.getInstance();
+
+    // create entity manager
+    entityManagerService = container.getComponentInstanceOfType(EntityManagerService.class);
+    entityManagerService.startRequest(container);
+    entityManager = entityManagerService.getEntityManager();
   }
 
   @After
   public void teardown() {
-    if(entityManager != null) {
-      entityManager.close();
+    // close entity manager
+    if(entityManagerService != null) {
+      entityManagerService.endRequest(container);
     }
-    if(entityManagerFactory != null) {
-      entityManagerFactory.close();
-    }
+    container.stop();
   }
 }
