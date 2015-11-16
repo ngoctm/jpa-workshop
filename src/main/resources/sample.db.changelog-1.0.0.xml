@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd">
+
+    <!-- Managing both DB that use sequences and db that use auto increment -->
+    <property name="autoIncrement" value="true" dbms="mysql,mssql,h2,sybase,db2,hsqldb"/>
+    <property name="autoIncrement" value="false" dbms="oracle,postgresql"/>
+
+    <!-- Managing auto generation of timestamp by Database -->
+    <property name="now" value="now()" dbms="mysql,hsqldb,postgresql,h2"/>
+    <property name="now" value="sysdate" dbms="oracle"/>
+    <property name="now" value="CURRENT_TIMESTAMP" dbms="mssql"/>
+
+
+    <changeSet author="superhero" id="1.0.0-1">
+        <createTable tableName="SUPERHERO">
+            <column name="SUPERHERO_ID" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_SUPERHERO_SUPERHERO_ID"/>
+            </column>
+            <column name="NAME" type="VARCHAR(50)"/>
+            <column name="CIVIL_NAME" type="VARCHAR(100)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="PICTURE" type="LONGBLOB"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="superhero" id="1.0.0-2">
+        <createTable tableName="ENNEMY">
+            <column name="ENNEMY_ID" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_ENNEMY_ENNEMY_ID"/>
+            </column>
+            <column name="NAME" type="VARCHAR(50)"/>
+            <column name="PICTURE" type="LONGBLOB"/>
+            <column name="SUPERHERO_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="superhero" id="1.0.0-3">
+        <createTable tableName="POWER">
+            <column name="POWER_ID" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_POWER_POWER_ID"/>
+            </column>
+            <column name="NAME" type="VARCHAR(50)"/>
+            <column name="DESCRIPTION" type="VARCHAR(100)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="superhero" id="1.0.0-4">
+        <createTable tableName="SUPERHERO_POWER">
+            <column name="SUPERHERO_ID" type="BIGINT"/>
+            <column name="POWER_ID" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+
+
+
+    <changeSet author="wiki" id="1.0.0-5">
+        <addForeignKeyConstraint baseColumnNames="SUPERHERO_ID" baseTableName="ENNEMY"
+                                 constraintName="FK_ENNEMY_SUPERHERO_01" deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="SUPERHERO_ID" referencedTableName="SUPERHERO"/>
+    </changeSet>
+
+    <changeSet author="wiki" id="1.0.0-6">
+        <addForeignKeyConstraint baseColumnNames="SUPERHERO_ID" baseTableName="SUPERHERO_POWER"
+                                 constraintName="FK_SUPERHERO_POWER_SUPERHERO_ID_01" deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="SUPERHERO_ID" referencedTableName="SUPERHERO"/>
+    </changeSet>
+
+    <changeSet author="wiki" id="1.0.0-7">
+        <addForeignKeyConstraint baseColumnNames="POWER_ID" baseTableName="SUPERHERO_POWER"
+                                 constraintName="FK_SUPERHERO_POWER_POWER_ID_01" deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="POWER_ID" referencedTableName="POWER"/>
+    </changeSet>
+</databaseChangeLog>
